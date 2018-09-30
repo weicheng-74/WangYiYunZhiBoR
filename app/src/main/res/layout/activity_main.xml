@@ -17,13 +17,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:text="次状态栏目显示实时情况" />
 
         <Button
             android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="登录网易云IM" />
+            android:text="登录网易云IM（必须点击）" />
 
         <Button
             android:id="@+id/button2"
@@ -35,13 +36,19 @@
             android:id="@+id/button3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="发送消息。" />
+            android:text="发送一条文本消息。" />
 
         <Button
             android:id="@+id/button4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="请尽快发货。" />
+            android:text="实现单聊模式" />
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="发送一条文本消息。" />
     </LinearLayout>
 
 </ScrollView>

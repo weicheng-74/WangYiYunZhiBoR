@@ -1,6 +1,7 @@
 package com.twc.wangyiyunzhibor.register;
 
 import android.content.Context;
+import android.util.EventLog;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -11,10 +12,12 @@ import com.netease.nimlib.sdk.auth.AuthServiceObserver;
 import com.netease.nimlib.sdk.msg.MsgServiceObserve;
 import com.netease.nimlib.sdk.msg.model.IMMessage;
 import com.twc.wangyiyunzhibor.MyApp;
+import com.twc.wangyiyunzhibor.bean.MsgEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 public class IMListener {
     private static IMListener instance = null;
-
 
     private IMListener() {
 
@@ -43,9 +46,10 @@ public class IMListener {
          * @param register true为注册，false为注销
          */
         NIMClient.getService(AuthServiceObserver.class).observeOnlineStatus(registOrUnRegist, true);
-        NIMClient.getService(MsgServiceObserve.class).observeMsgStatus(msgObserver,true);
+        NIMClient.getService(MsgServiceObserve.class).observeMsgStatus(msgObserver, true);
     }
-    private Observer<IMMessage> msgObserver=new Observer<IMMessage>() {
+
+    private Observer<IMMessage> msgObserver = new Observer<IMMessage>() {
         @Override
         public void onEvent(IMMessage imMessage) {
 
@@ -56,10 +60,12 @@ public class IMListener {
         public void onEvent(StatusCode statusCode) {
             switch (statusCode) {
                 case LOGINED:
-                    Toast.makeText(context, "已经登录成功", Toast.LENGTH_SHORT).show();
+                    EventBus.getDefault().post(new MsgEvent("已经登录成功"));
+//                    Toast.makeText(context, "已经登录成功", Toast.LENGTH_SHORT).show();
                     break;
                 case UNLOGIN:
-                    Toast.makeText(context, "未登录/登录失败", Toast.LENGTH_SHORT).show();
+                    EventBus.getDefault().post(new MsgEvent("未登录或者登录失败"));
+//                    Toast.makeText(context, "未登录/登录失败", Toast.LENGTH_SHORT).show();
                     break;
             }
             Log.e("twc", statusCode.toString());

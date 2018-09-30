@@ -19,11 +19,17 @@ import com.netease.nimlib.sdk.msg.MessageBuilder;
 import com.netease.nimlib.sdk.msg.MsgService;
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.netease.nimlib.sdk.msg.model.IMMessage;
+import com.twc.wangyiyunzhibor.bean.MsgEvent;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
+ * 网易云账号。
  * 账号1 ：777777
  * token 777777
  * <p>
@@ -43,20 +49,35 @@ public class MainActivity extends UI {
     @BindView(R.id.button4)
     Button button4;
 
+    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+    public void MsgEvent(MsgEvent event) {
+        if (event != null) {
+            textmsg.setText("实时情况：" + event.getMsg());
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
+        EventBus.getDefault().register(this);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 NIMClient.getService(AuthService.class).login(new LoginInfo("777777", "777777"))
                         .setCallback(new RequestCallback() {
                             @Override
                             public void onSuccess(Object param) {
                                 Log.e("twc", param.toString());
+                                NimUIKit.loginSuccess("777777");
                                 Toast.makeText(MainActivity.this, "登录成功", Toast.LENGTH_LONG).show();
                             }
 
@@ -98,9 +119,8 @@ public class MainActivity extends UI {
         button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NimUIKit.loginSuccess("777777");
                 // 打开单聊界面
-                NimUIKit.startP2PSession(MainActivity.this, "888888",null);
+                NimUIKit.startP2PSession(MainActivity.this, "888888", null);
 //                P2PMessageActivity.start(MainActivity.this, "888888", "888888", "888888");
             }
         });
