@@ -9,6 +9,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.netease.nim.uikit.api.NimUIKit;
+import com.netease.nim.uikit.business.session.activity.P2PMessageActivity;
+import com.netease.nim.uikit.common.activity.UI;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.auth.AuthService;
@@ -28,7 +30,7 @@ import butterknife.ButterKnife;
  * 账号2 ：888888
  * token 888888
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends UI {
 
     @BindView(R.id.button)
     Button button;
@@ -96,8 +98,10 @@ public class MainActivity extends AppCompatActivity {
         button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                NimUIKit.loginSuccess("777777");
                 // 打开单聊界面
-               NimUIKit.startP2PSession(MainActivity.this, "888888");
+                NimUIKit.startP2PSession(MainActivity.this, "888888",null);
+//                P2PMessageActivity.start(MainActivity.this, "888888", "888888", "888888");
             }
         });
     }

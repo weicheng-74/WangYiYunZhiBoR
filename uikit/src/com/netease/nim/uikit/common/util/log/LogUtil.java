@@ -21,7 +21,7 @@ public class LogUtil extends NimLog {
     }
 
     public static void ui(String msg) {
-        getLog().i("ui", buildMessage(msg));
+        getLog().i("ui", ""+buildMessage(msg));
     }
 
     public static void res(String msg) {
