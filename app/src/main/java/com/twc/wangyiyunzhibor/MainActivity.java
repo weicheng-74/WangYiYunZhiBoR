@@ -240,6 +240,7 @@ public class MainActivity extends UI {
                 IMMessage message = MessageBuilder.createCustomMessage("888888", SessionTypeEnum.P2P,
                         attachment.getValue().getDesc(), attachment);
                 NIMClient.getService(MsgService.class).sendMessage(message, false);
+                NimUIKit.startP2PSession(MainActivity.this, "888888", null);
             }
         });
     }
