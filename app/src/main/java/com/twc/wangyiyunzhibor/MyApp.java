@@ -3,10 +3,13 @@ package com.twc.wangyiyunzhibor;
 import android.app.Application;
 
 import com.netease.nim.uikit.api.NimUIKit;
-import com.netease.nim.uikit.business.contact.core.util.ContactHelper;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.auth.LoginInfo;
+import com.netease.nimlib.sdk.msg.MsgService;
 import com.netease.nimlib.sdk.util.NIMUtil;
+import com.twc.wangyiyunzhibor.mymessage.CustomAttachParser;
+import com.twc.wangyiyunzhibor.mymessage.GuessAttachment;
+import com.twc.wangyiyunzhibor.mymessage.guest.MsgViewHolderGuess;
 import com.twc.wangyiyunzhibor.register.IMListener;
 
 /**
@@ -45,6 +48,8 @@ public class MyApp extends Application {
 //
 //            // 在线状态定制初始化。
 //            NimUIKit.setOnlineStateContentProvider(new DemoOnlineStateContentProvider());
+            NIMClient.getService(MsgService.class).registerCustomAttachmentParser(new CustomAttachParser());
+            NimUIKit.registerMsgItemViewHolder(GuessAttachment.class, MsgViewHolderGuess.class);
         }
     }
 
